@@ -56,9 +56,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      */
     public Item dequeue() {
         if (isEmpty()) throw new NoSuchElementException("Stack overflow");
-        int randomIdx = StdRandom.uniform(N);
-        Item item = a[randomIdx];
-        a[randomIdx] = null;
+        int removeIdx = StdRandom.uniform(N);
+        Item item = a[removeIdx];
+        a[removeIdx] = a[N-1];
+        a[N-1] = null;
         N--;
         if (N > 0 && N == a.length/4) resize(a.length/2);
         return item;
@@ -84,7 +85,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         private Item[] copy;
 
         public RandomArrayIterator() {
-            copy = (Item[]) new Object[a.length];
+            copy = (Item[]) new Object[N];
             for(int j = 0; j < copy.length; j++)
                 copy[j] = a[j];
             StdRandom.shuffle(copy);
@@ -101,44 +102,24 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public static void main(String[] args) {
         RandomizedQueue<String> rq = new RandomizedQueue<String>();
 
-        StdOut.println("Check isEmpty()");
-        StdOut.println(rq.isEmpty());
+        rq.enqueue("1");
+        rq.enqueue("2");
+        rq.enqueue("3");
+        StdOut.println("sample:\t" + rq.sample());      //==> "CEKXSVFFZV"
+        rq.enqueue("4");
+        StdOut.println("\tdequeue:\t" + rq.dequeue());     //==> "OIKEUEMSXM"
+        StdOut.println("sample:\t" + rq.sample());     //==> "null"
+        StdOut.println("\tdequeue:\t" + rq.dequeue());    // ==> "RFMWTKBCTU"
+        StdOut.println("sample:\t" + rq.sample());     //==> "null"
+        StdOut.println("sample:\t" + rq.sample());     // ==> "CEKXSVFFZV"
+        StdOut.println("sample:\t" + rq.sample());     // ==> "null"
+        StdOut.println("\tdequeue:\t" + rq.dequeue());    // ==> "null"
 
-        StdOut.println("Check size()");
-        StdOut.println(rq.size());
-
-        StdOut.println("Check enqueue()");
-        rq.enqueue("Hello");
-        rq.enqueue("World");
-        rq.enqueue("Where");
-        rq.enqueue("Am");
-        rq.enqueue("I?");
-        StdOut.println(rq.sample());
-        StdOut.println(rq.sample());
-        StdOut.println(rq.sample());
-        StdOut.println(rq.sample());
-        StdOut.println(rq.sample());
-
-        StdOut.println("Check isEmpty()");
-        StdOut.println(rq.isEmpty());
-
-        StdOut.println("Check size()");
-        StdOut.println(rq.size());
-
-        StdOut.println("Check dequeue()");
-        StdOut.println(rq.dequeue());
-        StdOut.println("Check isEmpty()");
-        StdOut.println(rq.isEmpty());
-        StdOut.println("Check size()");
-        StdOut.println(rq.size());
-
-        StdOut.println(rq.dequeue());
-        StdOut.println(rq.dequeue());
-        StdOut.println(rq.dequeue());
-        StdOut.println(rq.dequeue());
-        StdOut.println("Check isEmpty()");
-        StdOut.println(rq.isEmpty());
-        StdOut.println("Check size()");
-        StdOut.println(rq.size());
+        StdOut.println("\nsample:\t" + rq.sample());
+        StdOut.println("sample:\t" + rq.sample());
+        StdOut.println("sample:\t" + rq.sample());
+        StdOut.println("sample:\t" + rq.sample());
+        StdOut.println("sample:\t" + rq.sample());
+        StdOut.println("sample:\t" + rq.sample());
     }
 }

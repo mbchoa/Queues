@@ -12,7 +12,7 @@ public class Subset {
         Iterator i = rq.iterator();
         int numPrinted = 0;
         while (i.hasNext() && numPrinted < k) {
-            StdOut.println(rq.sample());
+            StdOut.println(rq.dequeue());
             numPrinted++;
         }
     }
